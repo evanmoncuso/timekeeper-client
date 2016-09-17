@@ -111,6 +111,7 @@ Response:
     "taxRate": 0.0307
   },
 `
+...
 
 #### get -> /:jobName
 A GET request to a specific jobname gets back the information for that job
@@ -148,4 +149,5 @@ List of all jobs in array form
     "hourlyRate": 24,
     "taxRate": 0.0307
   },
-`
+` 
+...
