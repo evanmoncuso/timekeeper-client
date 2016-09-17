@@ -87,7 +87,8 @@ Form and input
 =============
  */
 
-.back {
+.back,
+.close {
   padding: 12px;
   background-color: blue;
   color: white;
@@ -97,7 +98,8 @@ Form and input
 }
 
 .form,
-.display_invoice {
+.display_invoice,
+.notification {
   background-color: #fff;
   width: 720px;
   padding: 12px;
@@ -253,4 +255,23 @@ Invoice
   margin: 24px auto;
   display: flex;
   justify-content: space-between;
+}
+
+/*
+=============
+Notification
+=============
+ */
+
+.notification {
+  height: 120px;
+}
+
+.notification h2 {
+  text-align: center;
+  font-size: 32px;
+}
+
+.close {
+  margin: 24px auto;
 }
