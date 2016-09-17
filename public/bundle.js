@@ -23513,6 +23513,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// ---- components ----
+	var Home = __webpack_require__(269);
 	var Job = __webpack_require__(261);
 	var PunchCard = __webpack_require__(265);
 	var CreateInvoice = __webpack_require__(268);
@@ -23530,8 +23531,8 @@
 	  return _react2.default.createElement('div', { className: 'container' }, _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory }, _react2.default.createElement(_reactRouter.Route, { path: '/' }, _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }), _react2.default.createElement(_reactRouter.Route, { path: '/job', component: Job }), _react2.default.createElement(_reactRouter.Route, { path: '/punchcard', component: PunchCard }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice_setup', component: CreateInvoice }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice', component: Invoice }))));
 	};
 	
-	var Home = function Home() {
-	  return _react2.default.createElement('div', { className: 'options_container for_options' }, _react2.default.createElement(_reactRouter.Link, { to: '/job' }, _react2.default.createElement('div', { className: 'option job' }, 'Create a new job')), _react2.default.createElement(_reactRouter.Link, { to: '/punchcard' }, _react2.default.createElement('div', { className: 'option punch' }, 'Clock in or out')), _react2.default.createElement(_reactRouter.Link, { to: '/invoice_setup' }, _react2.default.createElement('div', { className: 'option invoice' }, 'Make an invoice')));
+	App.propTypes = {
+	  dispatchGetAllJobs: _react2.default.PropTypes.func
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -29428,8 +29429,8 @@
 	    } })), _react2.default.createElement('button', { type: 'submit' }, 'create')), _react2.default.createElement(AllJobs, { clickable: false })));
 	};
 	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	CreateJob.propTypes = {
+	  dispatchCreateNewJob: _react2.default.PropTypes.func
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -29463,10 +29464,14 @@
 	  var jobs = _ref.jobs;
 	  var clickable = _ref.clickable;
 	
-	
 	  return _react2.default.createElement('div', { className: 'section_container all_jobs' }, jobs.map(function (job) {
 	    return _react2.default.createElement(Job, { key: job.id, job: job, clickable: clickable });
 	  }));
+	};
+	
+	AllJobs.propTypes = {
+	  jobs: _react2.default.PropTypes.array,
+	  clickable: _react2.default.PropTypes.bool
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -29521,6 +29526,13 @@
 	        }
 	      }
 	    } }, _react2.default.createElement('h3', null, job.title), _react2.default.createElement('p', null, _react2.default.createElement('span', { className: 'label' }, 'hourly rate: '), _react2.default.createElement('span', { className: 'data' }, '$', job.hourlyRate)), _react2.default.createElement('p', null, _react2.default.createElement('span', { className: 'label' }, 'tax rate: '), _react2.default.createElement('span', { className: 'data' }, (job.taxRate * 100).toFixed(2), '%')));
+	};
+	
+	Job.propTypes = {
+	  job: _react2.default.PropTypes.object,
+	  selectedJob: _react2.default.PropTypes.object,
+	  clickable: _react2.default.PropTypes.bool,
+	  chooseJob: _react2.default.PropTypes.func
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -29638,6 +29650,10 @@
 	    } }), _react2.default.createElement('p', { className: 'limit' }, 'limit 250 characters'), _react2.default.createElement('p', { className: 'limit' }, 'please submit a work summary when punching out from a job.')), _react2.default.createElement('button', { type: 'submit' }, 'punch'))));
 	};
 	
+	PunchCard.Proptypes = {
+	  invoiceData: _react2.default.PropTypes.object
+	};
+	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    selectedJob: state.selectedJob
@@ -29744,9 +29760,13 @@
 	var Invoice = function Invoice(_ref) {
 	  var invoiceData = _ref.invoiceData;
 	
-	  return _react2.default.createElement('div', { className: 'section_container' }, _react2.default.createElement('div', { className: 'display_invoice' }, _react2.default.createElement('h2', null, invoiceData.title), _react2.default.createElement('div', { className: 'date_range' }, _react2.default.createElement('p', null, 'start: ', invoiceData.start.slice(5, 10) + ' ' + invoiceData.start.slice(0, 4)), _react2.default.createElement('p', null, 'end: ', invoiceData.end.slice(5, 10) + ' ' + invoiceData.end.slice(0, 4))), _react2.default.createElement('div', { className: 'itemized' }, invoiceData.punchData.map(function (item) {
+	  return _react2.default.createElement('div', { className: 'section_container' }, _react2.default.createElement(_reactRouter.Link, { to: '/' }, _react2.default.createElement('div', { className: 'back btn' }, 'back')), _react2.default.createElement('div', { className: 'display_invoice' }, _react2.default.createElement('h2', null, invoiceData.title), _react2.default.createElement('div', { className: 'date_range' }, _react2.default.createElement('p', null, 'start: ', invoiceData.start.slice(5, 10) + ' ' + invoiceData.start.slice(0, 4)), _react2.default.createElement('p', null, 'end: ', invoiceData.end.slice(5, 10) + ' ' + invoiceData.end.slice(0, 4))), _react2.default.createElement('div', { className: 'itemized' }, invoiceData.punchData.map(function (item) {
 	    return _react2.default.createElement('div', { className: 'indiv_punch_item', key: item.id }, _react2.default.createElement('span', { className: 'data_point' }, 'date: ', item.createdAt.slice(5, 10)), _react2.default.createElement('span', { className: 'data_point' }, item.taskSummary), _react2.default.createElement('span', { className: 'data_point' }, '$', item.totalMinutes * (invoiceData.hourlyRate / 60)));
-	  })), _react2.default.createElement('div', { className: 'final_payment' }, _react2.default.createElement('div', { className: 'subtotal' }, invoiceData.hourlyRate, ' per hour x ', invoiceData.minutes, ' minutes = ', invoiceData.subtotal), _react2.default.createElement('div', { className: 'tax' }, invoiceData.taxRate, ' x ', invoiceData.subtotal, ' = ', invoiceData.total), _react2.default.createElement('div', { className: 'total' }, _react2.default.createElement('span', { className: 'total_label' }, 'total'), ' = ', invoiceData.total))));
+	  })), _react2.default.createElement('div', { className: 'final_payment' }, _react2.default.createElement('div', { className: 'subtotal' }, invoiceData.hourlyRate, ' per hour x ', invoiceData.minutes, ' minutes = ', invoiceData.subtotal), _react2.default.createElement('div', { className: 'tax' }, (invoiceData.taxRate * 100).toFixed(2), ' % x ', invoiceData.subtotal, ' = ', invoiceData.total), _react2.default.createElement('div', { className: 'total' }, _react2.default.createElement('span', { className: 'total_label' }, 'total'), ' = ', invoiceData.total))));
+	};
+	
+	Invoice.propTypes = {
+	  invoiceData: _react2.default.PropTypes.object
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -29806,6 +29826,11 @@
 	    } })), _react2.default.createElement('button', null, 'submit'))));
 	};
 	
+	Invoice.propTypes = {
+	  selectedJob: _react2.default.PropTypes.object,
+	  dispatchJobData: _react2.default.PropTypes.func
+	};
+	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    selectedJob: state.selectedJob
@@ -29821,6 +29846,26 @@
 	};
 	
 	module.exports = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Invoice);
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(200);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Home = function Home() {
+	  return _react2.default.createElement('div', { className: 'options_container for_options' }, _react2.default.createElement(_reactRouter.Link, { to: '/job' }, _react2.default.createElement('div', { className: 'option job' }, 'Create a new job')), _react2.default.createElement(_reactRouter.Link, { to: '/punchcard' }, _react2.default.createElement('div', { className: 'option punch' }, 'Clock in or out')), _react2.default.createElement(_reactRouter.Link, { to: '/invoice_setup' }, _react2.default.createElement('div', { className: 'option invoice' }, 'Make an invoice')));
+	};
+	
+	module.exports = Home;
 
 /***/ }
 /******/ ]);
