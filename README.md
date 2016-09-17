@@ -1,6 +1,6 @@
 # Time Track and Invoicing app
 
-A simple app to create jobs, track time working on that job, and create billing invoices for any job over a given range of time, mark, audio, video {
+A simple app to create jobs, track time working on that job, and create billing invoices for any job over a given range of time
 
 ## Creator
 Evan Moncuso
