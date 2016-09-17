@@ -1,18 +1,21 @@
 const express = require('express');
 const bp = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
+let port = process.env.PORT || 3000;
 
 const apiRouter = require('./routes/apiRouter.js');
 
 app.use(bp.urlencoded({ extended: false }))
 app.use(bp.json());
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/api', apiRouter);
 
-app.listen(3000, () => {
-  console.log('app listening on port 3000');
+app.listen(port, () => {
+  console.log('app listening on port', port);
 })
