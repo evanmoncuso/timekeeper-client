@@ -102,6 +102,7 @@ EXAMPLE
 GET request: /api/jobs/all
 
 Response:
+
 `[
   {
     "id": 1,
