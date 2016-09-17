@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --progress --colors --watch",
-    "start": "webpack && node server/server.js",
+    "start": "node server/server.js",
     "postgres": "heroku pg:psql DATABASE_URL --app hire-db"
   },
   "author": "",
