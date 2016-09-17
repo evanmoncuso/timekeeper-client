@@ -23467,6 +23467,22 @@
 	  }
 	};
 	
+	var notification = function notification() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'PUNCH NOTIFICATION':
+	      return {
+	        title: action.title,
+	        status: action.status,
+	        length: action.length
+	      };
+	    default:
+	      return state;
+	  }
+	};
+	
 	var invoiceData = function invoiceData() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
@@ -23491,9 +23507,10 @@
 	};
 	
 	module.exports = (0, _redux.combineReducers)({
+	  invoiceData: invoiceData,
 	  jobs: jobs,
-	  selectedJob: selectedJob,
-	  invoiceData: invoiceData
+	  notification: notification,
+	  selectedJob: selectedJob
 	});
 
 /***/ },
@@ -23513,13 +23530,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// ---- components ----
-	var Home = __webpack_require__(269);
-	var Job = __webpack_require__(261);
-	var PunchCard = __webpack_require__(265);
+	var Home = __webpack_require__(261);
+	var Job = __webpack_require__(262);
+	var PunchCard = __webpack_require__(266);
 	var CreateInvoice = __webpack_require__(268);
-	var Invoice = __webpack_require__(267);
+	var Invoice = __webpack_require__(269);
+	var punchNotification = __webpack_require__(270);
 	
-	var _require = __webpack_require__(264);
+	var _require = __webpack_require__(265);
 	
 	var getAllJobs = _require.getAllJobs;
 	
@@ -23528,7 +23546,7 @@
 	  var dispatchGetAllJobs = _ref.dispatchGetAllJobs;
 	
 	  dispatchGetAllJobs();
-	  return _react2.default.createElement('div', { className: 'container' }, _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory }, _react2.default.createElement(_reactRouter.Route, { path: '/' }, _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }), _react2.default.createElement(_reactRouter.Route, { path: '/job', component: Job }), _react2.default.createElement(_reactRouter.Route, { path: '/punchcard', component: PunchCard }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice_setup', component: CreateInvoice }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice', component: Invoice }))));
+	  return _react2.default.createElement('div', { className: 'container' }, _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory }, _react2.default.createElement(_reactRouter.Route, { path: '/' }, _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }), _react2.default.createElement(_reactRouter.Route, { path: '/job', component: Job }), _react2.default.createElement(_reactRouter.Route, { path: '/punchcard', component: PunchCard }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice_setup', component: CreateInvoice }), _react2.default.createElement(_reactRouter.Route, { path: '/invoice', component: Invoice }), _react2.default.createElement(_reactRouter.Route, { path: '/confirmation', component: punchNotification }))));
 	};
 	
 	App.propTypes = {
@@ -29377,13 +29395,33 @@
 	
 	var _reactRouter = __webpack_require__(200);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Home = function Home() {
+	  return _react2.default.createElement('div', { className: 'options_container for_options' }, _react2.default.createElement(_reactRouter.Link, { to: '/job' }, _react2.default.createElement('div', { className: 'option job' }, 'Create a new job')), _react2.default.createElement(_reactRouter.Link, { to: '/punchcard' }, _react2.default.createElement('div', { className: 'option punch' }, 'Clock in or out')), _react2.default.createElement(_reactRouter.Link, { to: '/invoice_setup' }, _react2.default.createElement('div', { className: 'option invoice' }, 'Make an invoice')));
+	};
+	
+	module.exports = Home;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(200);
+	
 	var _reactRedux = __webpack_require__(172);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var AllJobs = __webpack_require__(262);
+	var AllJobs = __webpack_require__(263);
 	
-	var _require = __webpack_require__(264);
+	var _require = __webpack_require__(265);
 	
 	var createNewJob = _require.createNewJob;
 	
@@ -29444,7 +29482,7 @@
 	module.exports = (0, _reactRedux.connect)(null, mapDispatchToProps)(CreateJob);
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29458,7 +29496,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// ---- components ----
-	var Job = __webpack_require__(263);
+	var Job = __webpack_require__(264);
 	
 	var AllJobs = function AllJobs(_ref) {
 	  var jobs = _ref.jobs;
@@ -29494,7 +29532,7 @@
 	module.exports = (0, _reactRedux.connect)(mapStateToProps)(AllJobs);
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29555,7 +29593,7 @@
 	module.exports = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Job);
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -29606,7 +29644,7 @@
 	};
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29619,15 +29657,16 @@
 	
 	var _reactRouter = __webpack_require__(200);
 	
-	var _punchActions = __webpack_require__(266);
+	var _punchActions = __webpack_require__(267);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// ---- components ----
-	var AllJobs = __webpack_require__(262);
+	var AllJobs = __webpack_require__(263);
 	
 	var PunchCard = function PunchCard(_ref) {
 	  var selectedJob = _ref.selectedJob;
+	  var dispatchSubmitPunch = _ref.dispatchSubmitPunch;
 	
 	  var summary = void 0;
 	  return _react2.default.createElement('div', { className: 'section_container for_punchcard' }, _react2.default.createElement(_reactRouter.Link, { to: '/' }, _react2.default.createElement('div', { className: 'back btn' }, 'back')), _react2.default.createElement('div', { className: 'punch_card form' }, _react2.default.createElement('h2', null, 'Clock In or Out'), _react2.default.createElement(AllJobs, { clickable: true }), _react2.default.createElement('form', { onSubmit: function onSubmit(e) {
@@ -29638,7 +29677,9 @@
 	          jobId: selectedJob.id,
 	          summary: summary.value
 	        };
-	        (0, _punchActions.submitPunch)(punchData);
+	
+	        dispatchSubmitPunch(punchData);
+	
 	        summary.value = '';
 	      }
 	    }
@@ -29651,7 +29692,8 @@
 	};
 	
 	PunchCard.Proptypes = {
-	  invoiceData: _react2.default.PropTypes.object
+	  invoiceData: _react2.default.PropTypes.object,
+	  dispatchSubmitPunch: _react2.default.PropTypes.func
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -29660,10 +29702,18 @@
 	  };
 	};
 	
-	module.exports = (0, _reactRedux.connect)(mapStateToProps)(PunchCard);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    dispatchSubmitPunch: function dispatchSubmitPunch(data) {
+	      return dispatch((0, _punchActions.submitPunch)(data));
+	    }
+	  };
+	};
+	
+	module.exports = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PunchCard);
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29688,25 +29738,35 @@
 	  };
 	};
 	
+	var optimisticNotification = function optimisticNotification(title, status, length) {
+	  return {
+	    type: 'PUNCH NOTIFICATION',
+	    title: title,
+	    status: status
+	  };
+	};
+	
 	module.exports = {
 	  submitPunch: function submitPunch(punchData) {
-	    fetch(baseUrl + 'timeEntry/', {
-	      method: 'POST',
-	      body: JSON.stringify(punchData),
-	      headers: {
-	        'Content-Type': 'application/json'
-	      }
-	    }).then(function (response) {
-	      return response.json();
-	    }).then(function (response) {
-	      // TODO
-	      // figure out some way to show the punch has been submitted
-	      console.log(response);
-	    }).catch(function (err) {
-	      if (err) {
-	        console.log(err);
-	      }
-	    });
+	    return function (dispatch) {
+	      fetch(baseUrl + 'timeEntry/', {
+	        method: 'POST',
+	        body: JSON.stringify(punchData),
+	        headers: {
+	          'Content-Type': 'application/json'
+	        }
+	      }).then(function (response) {
+	        return response.json();
+	      }).then(function (response) {
+	        console.log(response);
+	        dispatch(optimisticNotification(response.response.jobName, response.status, response.timeDiff));
+	        _reactRouter.browserHistory.push('/confirmation');
+	      }).catch(function (err) {
+	        if (err) {
+	          console.log(err);
+	        }
+	      });
+	    };
 	  },
 	  getJobData: function getJobData(start, end, jobId, hourlyRate, taxRate, title) {
 	    return function (dispatch) {
@@ -29740,44 +29800,6 @@
 	};
 
 /***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(172);
-	
-	var _reactRouter = __webpack_require__(200);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// ---- components ----
-	
-	var Invoice = function Invoice(_ref) {
-	  var invoiceData = _ref.invoiceData;
-	
-	  return _react2.default.createElement('div', { className: 'section_container' }, _react2.default.createElement(_reactRouter.Link, { to: '/' }, _react2.default.createElement('div', { className: 'back btn' }, 'back')), _react2.default.createElement('div', { className: 'display_invoice' }, _react2.default.createElement('h2', null, invoiceData.title), _react2.default.createElement('div', { className: 'date_range' }, _react2.default.createElement('p', null, 'start: ', invoiceData.start.slice(5, 10) + ' ' + invoiceData.start.slice(0, 4)), _react2.default.createElement('p', null, 'end: ', invoiceData.end.slice(5, 10) + ' ' + invoiceData.end.slice(0, 4))), _react2.default.createElement('div', { className: 'itemized' }, invoiceData.punchData.map(function (item) {
-	    return _react2.default.createElement('div', { className: 'indiv_punch_item', key: item.id }, _react2.default.createElement('span', { className: 'data_point' }, 'date: ', item.createdAt.slice(5, 10)), _react2.default.createElement('span', { className: 'data_point' }, item.taskSummary), _react2.default.createElement('span', { className: 'data_point' }, '$', item.totalMinutes * (invoiceData.hourlyRate / 60)));
-	  })), _react2.default.createElement('div', { className: 'final_payment' }, _react2.default.createElement('div', { className: 'subtotal' }, invoiceData.hourlyRate, ' per hour x ', invoiceData.minutes, ' minutes = ', invoiceData.subtotal), _react2.default.createElement('div', { className: 'tax' }, (invoiceData.taxRate * 100).toFixed(2), ' % x ', invoiceData.subtotal, ' = ', invoiceData.total), _react2.default.createElement('div', { className: 'total' }, _react2.default.createElement('span', { className: 'total_label' }, 'total'), ' = ', invoiceData.total))));
-	};
-	
-	Invoice.propTypes = {
-	  invoiceData: _react2.default.PropTypes.object
-	};
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    invoiceData: state.invoiceData
-	  };
-	};
-	
-	module.exports = (0, _reactRedux.connect)(mapStateToProps)(Invoice);
-
-/***/ },
 /* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29791,12 +29813,12 @@
 	
 	var _reactRouter = __webpack_require__(200);
 	
-	var _punchActions = __webpack_require__(266);
+	var _punchActions = __webpack_require__(267);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// ---- components
-	var AllJobs = __webpack_require__(262);
+	var AllJobs = __webpack_require__(263);
 	
 	var Invoice = function Invoice(_ref) {
 	  var selectedJob = _ref.selectedJob;
@@ -29811,16 +29833,17 @@
 	        end = new Date(end);
 	        start = start.toISOString();
 	        end = end.toISOString();
+	        console.log(start, end);
 	        dispatchJobData(start, end, selectedJob.id, selectedJob.hourlyRate, selectedJob.taxRate, selectedJob.title);
 	      }
 	    } }, _react2.default.createElement('div', { className: 'full_input' }, _react2.default.createElement('label', null, 'Time period start'), _react2.default.createElement('input', {
-	    type: 'date',
 	    required: true,
+	    type: 'date',
 	    onChange: function onChange(date) {
 	      start = date.target.value;
 	    } })), _react2.default.createElement('div', { className: 'full_input' }, _react2.default.createElement('label', null, 'Time period end'), _react2.default.createElement('input', {
-	    type: 'date',
 	    required: true,
+	    type: 'date',
 	    onChange: function onChange(date) {
 	      end = date.target.value;
 	    } })), _react2.default.createElement('button', null, 'submit'))));
@@ -29857,15 +29880,94 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(172);
+	
 	var _reactRouter = __webpack_require__(200);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Home = function Home() {
-	  return _react2.default.createElement('div', { className: 'options_container for_options' }, _react2.default.createElement(_reactRouter.Link, { to: '/job' }, _react2.default.createElement('div', { className: 'option job' }, 'Create a new job')), _react2.default.createElement(_reactRouter.Link, { to: '/punchcard' }, _react2.default.createElement('div', { className: 'option punch' }, 'Clock in or out')), _react2.default.createElement(_reactRouter.Link, { to: '/invoice_setup' }, _react2.default.createElement('div', { className: 'option invoice' }, 'Make an invoice')));
+	// ---- components ----
+	
+	var Invoice = function Invoice(_ref) {
+	  var invoiceData = _ref.invoiceData;
+	
+	  return _react2.default.createElement('div', { className: 'section_container' }, _react2.default.createElement(_reactRouter.Link, { to: '/' }, _react2.default.createElement('div', { className: 'back btn' }, 'back')), _react2.default.createElement('div', { className: 'display_invoice' }, _react2.default.createElement('h2', null, invoiceData.title), _react2.default.createElement('div', { className: 'date_range' }, _react2.default.createElement('p', null, 'start: ', invoiceData.start.slice(5, 10) + ' ' + invoiceData.start.slice(0, 4)), _react2.default.createElement('p', null, 'end: ', invoiceData.end.slice(5, 10) + ' ' + invoiceData.end.slice(0, 4))), _react2.default.createElement('div', { className: 'itemized' }, invoiceData.punchData.map(function (item) {
+	    return _react2.default.createElement('div', { className: 'indiv_punch_item', key: item.id }, _react2.default.createElement('span', { className: 'data_point' }, 'date: ', item.createdAt.slice(5, 10)), _react2.default.createElement('span', { className: 'data_point' }, item.taskSummary), _react2.default.createElement('span', { className: 'data_point' }, '$', (item.totalMinutes * (invoiceData.hourlyRate / 60)).toFixed(2)));
+	  })), _react2.default.createElement('div', { className: 'final_payment' }, _react2.default.createElement('div', { className: 'subtotal' }, invoiceData.hourlyRate, ' per hour x ', invoiceData.minutes, ' minutes = ', invoiceData.subtotal), _react2.default.createElement('div', { className: 'tax' }, (invoiceData.taxRate * 100).toFixed(2), ' % x ', invoiceData.subtotal, ' = ', invoiceData.total), _react2.default.createElement('div', { className: 'total' }, _react2.default.createElement('span', { className: 'total_label' }, 'total'), ' = ', invoiceData.total))));
 	};
 	
-	module.exports = Home;
+	Invoice.propTypes = {
+	  invoiceData: _react2.default.PropTypes.object
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    invoiceData: state.invoiceData
+	  };
+	};
+	
+	module.exports = (0, _reactRedux.connect)(mapStateToProps)(Invoice);
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(200);
+	
+	var _reactRedux = __webpack_require__(172);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Notification = function Notification(_ref) {
+	  var title = _ref.title;
+	  var status = _ref.status;
+	  var length = _ref.length;
+	  var resetNotification = _ref.resetNotification;
+	
+	  setTimeout(function () {
+	    resetNotification();
+	    _reactRouter.browserHistory.push('/');
+	  }, 5000);
+	
+	  var inOrOut = status ? 'in' : 'out';
+	  return _react2.default.createElement('div', { className: 'notification' }, _react2.default.createElement('h2', null, 'You\'ve clocked ', inOrOut, ' as: ', title), _react2.default.createElement('p', { className: 'notification_minutes' }, length ? length + ' minutes' : ''), _react2.default.createElement(_reactRouter.Link, { to: '/' }, _react2.default.createElement('div', { className: 'close btn' }, 'close')));
+	};
+	
+	Notification.PropTypes = {
+	  length: _react2.default.PropTypes.string,
+	  status: _react2.default.PropTypes.bool,
+	  title: _react2.default.PropTypes.number,
+	  resetNotification: _react2.default.PropTypes.func
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    length: state.notification.length,
+	    status: state.notification.status,
+	    title: state.notification.title
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    resetNotification: function resetNotification() {
+	      dispatch({
+	        type: 'PUNCH NOTIFICATION',
+	        length: null,
+	        status: null,
+	        title: null
+	      });
+	    }
+	  };
+	};
+	
+	module.exports = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Notification);
 
 /***/ }
 /******/ ]);

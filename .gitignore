@@ -1,7 +1,0 @@
-node_modules
-
-secrets.js
-
-public/bundle.js*
-
-.tags*
