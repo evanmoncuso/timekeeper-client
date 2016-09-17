@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
           results.update({
             totalMinutes: timeDiff,
           });
-          res.send(JSON.stringify({status: 'closed', timeDiff, response}))
+          res.send(JSON.stringify({status: false, timeDiff, response}))
         })
       } else {
         Punch.create({
@@ -63,8 +63,8 @@ router.post('/', (req, res) => {
           totalMinutes: null,
           taskSummary: '',
         })
-        .then((something) => {
-          res.send(JSON.stringify(something))
+        .then((response) => {
+          res.send(JSON.stringify({status: true, response}))
         })
       }
     })
