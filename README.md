@@ -29,7 +29,9 @@ NodeJS
 
 ## Stack
 React / Redux
+
 NodeJS / Express
+
 Postgres / Sequelize
 
 API calls are made with fetch
