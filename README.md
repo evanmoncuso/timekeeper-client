@@ -110,8 +110,6 @@ Response:
     "hourlyRate": 24,
     "taxRate": 0.0307
   },
-
-  ...
 `
 
 #### get -> /:jobName
@@ -150,6 +148,4 @@ List of all jobs in array form
     "hourlyRate": 24,
     "taxRate": 0.0307
   },
-
-  ...
 `
