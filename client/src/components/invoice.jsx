@@ -7,6 +7,9 @@ import { Link } from 'react-router';
 const Invoice = ({ invoiceData }) => {
   return (
     <div className="section_container">
+      <Link to="/">
+        <div className="back btn">back</div>
+      </Link>
       <div className="display_invoice">
         <h2>{invoiceData.title}</h2>
         <div className="date_range">
@@ -27,7 +30,7 @@ const Invoice = ({ invoiceData }) => {
             {invoiceData.hourlyRate} per hour x {invoiceData.minutes} minutes = {invoiceData.subtotal}
           </div>
           <div className="tax">
-            {invoiceData.taxRate} x {invoiceData.subtotal} = {invoiceData.total}
+            {(invoiceData.taxRate * 100).toFixed(2)} % x {invoiceData.subtotal} = {invoiceData.total}
           </div>
           <div className="total">
             <span className="total_label">total</span> = {invoiceData.total}
@@ -37,6 +40,10 @@ const Invoice = ({ invoiceData }) => {
     </div>
   )
 }
+
+Invoice.propTypes = {
+  invoiceData: React.PropTypes.object,
+};
 
 const mapStateToProps = (state) => (
   {

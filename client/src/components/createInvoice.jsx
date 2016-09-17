@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router';
 
 import { getJobData } from '../actions/punchActions.js'
 
@@ -50,6 +50,11 @@ const Invoice = ({ selectedJob, dispatchJobData }) => {
     </div>
   )
 }
+
+Invoice.propTypes = {
+  selectedJob: React.PropTypes.object,
+  dispatchJobData: React.PropTypes.func,
+};
 
 const mapStateToProps = (state) => (
   {

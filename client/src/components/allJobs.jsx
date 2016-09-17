@@ -5,13 +5,17 @@ import { connect } from 'react-redux';
 const Job = require('./indivJob.jsx');
 
 const AllJobs = ({ jobs, clickable }) => {
-
   return (
     <div className="section_container all_jobs">
       {jobs.map((job) => <Job key={job.id} job={job} clickable={clickable} /> )}
     </div>
   )
 }
+
+AllJobs.propTypes = {
+  jobs: React.PropTypes.array,
+  clickable: React.PropTypes.bool,
+};
 
 const mapStateToProps = (state) => (
   {

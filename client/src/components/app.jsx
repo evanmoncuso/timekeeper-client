@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 // ---- components ----
+const Home = require('./home.jsx');
 const Job = require('./createJob.jsx');
 const PunchCard = require('./punchCard.jsx');
 const CreateInvoice = require('./createInvoice.jsx');
@@ -27,21 +28,9 @@ const App = ({ dispatchGetAllJobs }) => {
   )
 }
 
-const Home = () => {
-  return (
-    <div className="options_container for_options">
-      <Link to="/job">
-        <div className="option job">Create a new job</div>
-      </Link>
-      <Link to="/punchcard">
-        <div className="option punch">Clock in or out</div>
-      </Link>
-      <Link to="/invoice_setup">
-        <div className="option invoice">Make an invoice</div>
-      </Link>
-    </div>
-  );
-}
+App.propTypes = {
+  dispatchGetAllJobs: React.PropTypes.func,
+};
 
 const mapDispatchToProps = (dispatch) => (
   {

@@ -67,11 +67,9 @@ const CreateJob = ({ dispatchCreateNewJob }) => {
   )
 }
 
-const mapStateToProps = (state) => (
-  {
-
-  }
-)
+CreateJob.propTypes = {
+  dispatchCreateNewJob: React.PropTypes.func,
+};
 
 const mapDispatchToProps = (dispatch) => (
   {

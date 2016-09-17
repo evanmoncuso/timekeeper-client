@@ -29,6 +29,13 @@ const Job = ({ job, selectedJob, clickable, chooseJob }) => {
   )
 }
 
+Job.propTypes = {
+  job: React.PropTypes.object,
+  selectedJob: React.PropTypes.object,
+  clickable: React.PropTypes.bool,
+  chooseJob: React.PropTypes.func,
+};
+
 const mapStateToProps = (state) => (
   {
     selectedJob: state.selectedJob,

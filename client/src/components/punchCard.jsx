@@ -47,6 +47,10 @@ const PunchCard = ({ selectedJob }) => {
   )
 }
 
+PunchCard.Proptypes = {
+  invoiceData: React.PropTypes.object,
+}
+
 const mapStateToProps = (state) => (
   {
     selectedJob: state.selectedJob,
