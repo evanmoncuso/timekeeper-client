@@ -18,6 +18,19 @@ const selectedJob = (state = null, action) => {
   }
 }
 
+const notification = (state = {}, action) => {
+  switch (action.type) {
+    case 'PUNCH NOTIFICATION':
+      return {
+        title: action.title,
+        status: action.status,
+        length: action.length,
+      }
+    default:
+      return state;
+  }
+}
+
 const invoiceData = (state = [], action) => {
   switch (action.type) {
     case 'INVOICE DATA':
@@ -39,7 +52,8 @@ const invoiceData = (state = [], action) => {
 }
 
 module.exports = combineReducers({
-  jobs,
-  selectedJob,
   invoiceData,
+  jobs,
+  notification,
+  selectedJob,
 });

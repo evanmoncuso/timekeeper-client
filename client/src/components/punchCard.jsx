@@ -7,7 +7,7 @@ const AllJobs = require('./allJobs.jsx');
 
 import { submitPunch } from '../actions/punchActions.js';
 
-const PunchCard = ({ selectedJob }) => {
+const PunchCard = ({ selectedJob, dispatchSubmitPunch }) => {
   let summary;
   return (
     <div className="section_container for_punchcard">
@@ -25,7 +25,9 @@ const PunchCard = ({ selectedJob }) => {
                 jobId: selectedJob.id,
                 summary: summary.value,
               }
-              submitPunch(punchData);
+
+              dispatchSubmitPunch(punchData);
+
               summary.value = '';
             }
           }}
@@ -49,6 +51,7 @@ const PunchCard = ({ selectedJob }) => {
 
 PunchCard.Proptypes = {
   invoiceData: React.PropTypes.object,
+  dispatchSubmitPunch: React.PropTypes.func,
 }
 
 const mapStateToProps = (state) => (
@@ -57,4 +60,10 @@ const mapStateToProps = (state) => (
   }
 )
 
-module.exports = connect(mapStateToProps)(PunchCard);
+const mapDispatchToProps = (dispatch) => (
+  {
+    dispatchSubmitPunch: (data) => dispatch(submitPunch(data)),
+  }
+)
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(PunchCard);

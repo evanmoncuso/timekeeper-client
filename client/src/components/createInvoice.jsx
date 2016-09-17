@@ -25,22 +25,23 @@ const Invoice = ({ selectedJob, dispatchJobData }) => {
                 end = new Date(end);
                 start = start.toISOString();
                 end = end.toISOString();
+                console.log(start, end);
                 dispatchJobData(start, end, selectedJob.id, selectedJob.hourlyRate, selectedJob.taxRate, selectedJob.title);
               }
             }}>
           <div className="full_input">
             <label>Time period start</label>
             <input
-              type="date"
               required
+              type="date"
               onChange={(date) => { start = date.target.value; }}>
             </input>
           </div>
           <div className="full_input">
             <label>Time period end</label>
             <input
-              type="date"
               required
+              type="date"
               onChange={(date) => { end = date.target.value; }}>
             </input>
           </div>

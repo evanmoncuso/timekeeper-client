@@ -21,7 +21,7 @@ const Invoice = ({ invoiceData }) => {
             return (<div className="indiv_punch_item" key={item.id}>
               <span className="data_point">date: {item.createdAt.slice(5,10)}</span>
               <span className="data_point">{item.taskSummary}</span>
-              <span className="data_point">${item.totalMinutes * (invoiceData.hourlyRate/60)}</span>
+              <span className="data_point">${(item.totalMinutes * (invoiceData.hourlyRate/60)).toFixed(2)}</span>
             </div>)
           })}
         </div>

@@ -8,6 +8,7 @@ const Job = require('./createJob.jsx');
 const PunchCard = require('./punchCard.jsx');
 const CreateInvoice = require('./createInvoice.jsx');
 const Invoice = require('./invoice.jsx');
+const punchNotification = require('./punchNotification.jsx');
 
 const { getAllJobs } = require('../actions/jobsActions.js');
 
@@ -22,6 +23,7 @@ const App = ({ dispatchGetAllJobs }) => {
           <Route path="/punchcard" component={PunchCard}></Route>
           <Route path="/invoice_setup" component={CreateInvoice}></Route>
           <Route path="/invoice" component={Invoice}></Route>
+          <Route path="/confirmation" component={punchNotification}></Route>
         </Route>
       </Router>
     </div>

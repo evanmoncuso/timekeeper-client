@@ -16,29 +16,39 @@ const optimisticGetInvoiceInfo = (data, hourlyRate, taxRate, title, start, end, 
     tax,
     total,
   }
+);
+
+const optimisticNotification = (title, status, length) => (
+  {
+    type: 'PUNCH NOTIFICATION',
+    title,
+    status,
+  }
 )
 
 module.exports = {
-  submitPunch: (punchData) => {
-    fetch(`${baseUrl}timeEntry/`, {
-      method: 'POST',
-      body: JSON.stringify(punchData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) => response.json())
-    .then((response) => {
-      // TODO
-      // figure out some way to show the punch has been submitted
-      console.log(response);
-    })
-    .catch((err) => {
-      if (err) {
-        console.log(err);
+    submitPunch: (punchData) => (
+      (dispatch) => {
+        fetch(`${baseUrl}timeEntry/`, {
+          method: 'POST',
+          body: JSON.stringify(punchData),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response);
+          dispatch(optimisticNotification(response.response.jobName, response.status, response.timeDiff));
+          browserHistory.push('/confirmation');
+        })
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       }
-    });
-  },
+    ),
   getJobData: (start, end, jobId, hourlyRate, taxRate, title) => (
     (dispatch) => {
       fetch(`${baseUrl}timeEntry/?jobId=${jobId}&start=${start}&end=${end}`)
