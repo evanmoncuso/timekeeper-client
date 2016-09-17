@@ -1,3 +1,5 @@
+"use strict"
+
 const Sequelize = require('sequelize');
 const db = require('../config/db.js');
 const Job = require('./jobModel.js');

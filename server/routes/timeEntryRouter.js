@@ -1,3 +1,5 @@
+"use strict"
+
 const router = require('express').Router();
 const db = require('../config/db.js');
 const Punch = require('../models/punchModel.js');
