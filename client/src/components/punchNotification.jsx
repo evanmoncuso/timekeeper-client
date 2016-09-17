@@ -3,11 +3,6 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 const Notification = ({ title, status, length, resetNotification }) => {
-  setTimeout(() => {
-    resetNotification()
-    browserHistory.push('/');
-  }, 5000);
-
   let inOrOut = status ? 'in' : 'out';
   return (
     <div className="notification">
