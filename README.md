@@ -19,7 +19,8 @@ Copy in the database info provided into secrets.js access into the postgres db h
 then navigate to `localhost:3000` in your browser
 
 ## Deployment
-
+Deployed on heroku to make looking through the app a little easier if node/npm are not installed
+http://hire-timekeeper.herokuapp.com/
 
 ## Requirements
 npm (for installing dependencies)
