@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
     where: {
       $and: {
         jobId: req.query.jobId,
+        open: false,
         createdAt: {
           $gt: start,
         },
