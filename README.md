@@ -20,6 +20,7 @@ then navigate to `localhost:3000` in your browser
 
 ## Deployment
 Deployed on heroku to make looking through the app a little easier if node/npm are not installed
+
 http://hire-timekeeper.herokuapp.com/
 
 ## Requirements
